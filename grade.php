@@ -7,8 +7,7 @@
         if ($routes) {
             foreach ($routes as $route) {
                 ?>
-                
-                    <option value="<?php echo $route->route_id; ?>" <?php if($route->route_id == $routeId) echo 'selected' ?> ><?php echo $route->route_long_name; ?></option>
+                    <option <?php if ($route->route_id == $selectedRouteId) echo "selected" ?> value=<?php echo $route->route_id; ?>><?php echo $route->route_long_name; ?></option>
                     <?php
                 
             }
@@ -40,26 +39,9 @@
     </table>
     <script>
         function select() {
-            var myselect = $("#selectOpt").value();
-            window.location.href = "http://localhost/gohorse/index.php?controller=RoutesController&method=listarById&id=" + selectedId
-
-            $.ajax({
-                method: 'GET',
-                url: 'xxxx',
-                success: function (response) {
-
-                    template = `{{#routes}}
-                        <tr>
-                            <td>{{id}}</td>
-                            <td>{{nome}}</td>
-                        </td>
-                    {{/routes}}`
-
-                    const html = template(response)
-
-                    $('.routes-list').append(html)
-                }
-            })
+            var myselect = document.getElementById("selectOpt");
+            var selectedId = myselect.options[myselect.selectedIndex].value
+            window.location.href = "http://localhost/go_horse/index.php?controller=RoutesController&method=listarById&id=" + selectedId
         }    
         </script>
 </div>

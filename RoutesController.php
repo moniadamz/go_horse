@@ -9,7 +9,8 @@ class RoutesController extends Controller
     {
         $routes = Route::all();
         $routeId = null;
-        return $this->view('grade', ['routes' => $routes,  'routeId' => $routeId]);
+        $selectedRouteId = null;
+        return $this->view('grade', ['selectedRouteId' => $selectedRouteId, 'routes' => $routes,  'routeId' => $routeId]);
     }
 
     public function listarById($dados)
@@ -17,7 +18,7 @@ class RoutesController extends Controller
         $id      = (int) $dados['id'];
         $routeId = Route::find($id);
  
-        return $this->view('grade', ['routeId' => $routeId, 'routes' => Route::all()]);
+        return $this->view('grade', ['selectedRouteId' => $id, 'routeId' => $routeId, 'routes' => Route::all()]);
     }
  
     // /**
