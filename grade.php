@@ -19,7 +19,7 @@
 
         <thead>
             <tr>
-                <th>Nome</th>
+                 <th>Nome</th>
                 <th>Telefone</th>
             </tr>
         </thead>
