@@ -12,7 +12,8 @@ spl_autoload_register(function($class) {
 <html lang='pt-br'>
     <header>
         <meta charset="utf-8">
-        <title>Agenda de routes</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trabalho PHP</title>
         <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB' crossorigin='anonymous' />
         <link href='https://use.fontawesome.com/releases/v5.1.0/css/all.css' rel='stylesheet' integrity='sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt' crossorigin='anonymous' />
         <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
@@ -38,6 +39,9 @@ spl_autoload_register(function($class) {
                 echo "Controller não encontrado!";
             }
         } else {
+            session_start();
+            $_SESSION['aula'] = 'PHP';
+            $_SESSION['hora'] = time();
             header( "Location: http://localhost/go_horse/index.php?controller=RoutesController&method=listar" );
         }
         ?>

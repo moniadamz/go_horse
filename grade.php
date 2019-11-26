@@ -3,8 +3,11 @@
 <hr>
 
 <div class="container">
-    <select class="form-control" onChange="select()" id="selectOpt">
+
+    <select style="display: inline-block;" onChange="select()" id="selectOpt">
         <?php
+        session_start();
+        
         if ($routes) {
             foreach ($routes as $route) {
                 ?>
@@ -15,9 +18,9 @@
         }
         ?>
             </select>
-        <a href=<?php echo "?controller=RoutesController&method=excluir&id=".$selectedRouteId ?> class="btn btn-success">Vamos Começar!</a></div>
+        <a href=<?php echo "?controller=RoutesController&method=excluir&id=".$selectedRouteId ?> class="btn btn-danger">excluir</a>
 
-    <table class="table table-bordered table-striped" style="top:40px;">
+    <table class="table table-responsive table-bordered table-striped" style="top:40px;">
 
         <thead>
             <tr>
@@ -44,4 +47,5 @@
             window.location.href = "http://localhost/go_horse/index.php?controller=RoutesController&method=listarById&id=" + selectedId
         }    
         </script>
-</div>
+        <?php echo $_SESSION['aula'];?>
+    </div>
