@@ -15,10 +15,17 @@ class RoutesController extends Controller
 
     public function listarById($dados)
     {
-        $id      = (int) $dados['id'];
+        $id      = (string) $dados['id'];
         $routeId = Route::find($id);
  
         return $this->view('grade', ['selectedRouteId' => $id, 'routeId' => $routeId, 'routes' => Route::all()]);
+    }
+
+    public function excluir($dados)
+    {
+        $id      = (string) $dados['id'];
+        $route = Route::destroy($id);
+        header( "Location: http://localhost/go_horse/index.php?controller=RoutesController&method=listar" );
     }
  
     // /**
@@ -69,14 +76,7 @@ class RoutesController extends Controller
     //     return $this->listar();
     // }
  
-    /**
-     * Apagar um contato conforme o id informado
-     */
-    // public function excluir($dados)
-    // {
-    //     $id      = (int) $dados['id'];
-    //     $contato = Contato::destroy($id);
-    //     return $this->listar();
-    // }
+
+
 }
 ?>

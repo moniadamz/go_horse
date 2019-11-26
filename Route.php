@@ -133,18 +133,11 @@ class Route
     public static function find($id)
     {
         $conexao = Conexao::getInstance();
-        $stmt    = $conexao->prepare("SELECT trips.service_id, trips.route_id, stop_times.departure_time, stops.stop_name from stop_times join trips on trips.trip_id = stop_times.trip_id join stops on stops.stop_id = stop_times.stop_id 
+        $stmt    = $conexao->prepare("SELECT distinct trips.service_id, trips.route_id, stop_times.departure_time, stops.stop_name from stop_times join trips on trips.trip_id = stop_times.trip_id join stops on stops.stop_id = stop_times.stop_id 
         where trips.route_id = '{$id}'
-        order by trips.service_id, stop_times.departure_time limit 15;");
-        // $result  = array();
-        // if ($stmt->execute()) {
-        //     if ($stmt->rowCount() > 0) {
-        //         $resultado = $stmt->fetchObject('Route');
-        //         if ($resultado) {
-        //             return $resultado;
-        //         }
-        //     }
-        // }
+        group by stops.stop_name
+        order by trips.service_id, stop_times.departure_time;");
+
         $result  = array();
         if ($stmt->execute()) {
             while ($rs = $stmt->fetchObject(Route::class)) {
@@ -157,18 +150,13 @@ class Route
         return false;
     }
  
-    // /**
-    //  * Destruir um recurso
-    //  * @param type $id
-    //  * @return boolean
-    //  */
-    // public static function destroy($id)
-    // {
-    //     $conexao = Conexao::getInstance();
-    //     if ($conexao->exec("DELETE FROM contatos WHERE id='{$id}';")) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    public static function destroy($id)
+    {
+        $conexao = Conexao::getInstance();
+        if ($conexao->exec("DELETE FROM routes WHERE route_id='{$id}';")) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>

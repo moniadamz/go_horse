@@ -38,9 +38,7 @@ spl_autoload_register(function($class) {
                 echo "Controller não encontrado!";
             }
         } else {
-            echo '<h1>Routes</h1><hr><div class="container">';
-            echo 'Bem-vindo ao aplicativo MVC Routes! <br /><br />';
-            echo '<a href="?controller=RoutesController&method=listar" class="btn btn-success">Vamos Começar!</a></div>';
+            header( "Location: http://localhost/go_horse/index.php?controller=RoutesController&method=listar" );
         }
         ?>
 
