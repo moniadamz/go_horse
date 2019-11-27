@@ -1,10 +1,26 @@
 
-<h1 style="text-align: center; margin-top: 20px; background: ">Ônibus de Porto Alegre - Rotas</h1>
-<hr>
+<style> 
+    body{
+        background: goldenrod;
+    }
+
+    h1 {
+        text-align: center;
+        color: white;
+        margin-top: 20px;
+    }
+
+    th {
+        background: white;
+    }
+
+</style>
+
+<h1> Ônibus de Porto Alegre - Rotas </h1>
 
 <div class="container">
-
-    <select style="display: inline-block;" onChange="select()" id="selectOpt">
+<div style="display: flex;">
+    <select class="form-control" onChange="select()" id="selectOpt">
         <?php
         session_start();
         
@@ -19,8 +35,8 @@
         ?>
             </select>
         <a href=<?php echo "?controller=RoutesController&method=excluir&id=".$selectedRouteId ?> class="btn btn-danger">excluir</a>
-
-    <table class="table table-responsive table-bordered table-striped" style="top:40px;">
+</div>
+    <table class="table table-bordered table-striped" style="top:40px;">
 
         <thead>
             <tr>
