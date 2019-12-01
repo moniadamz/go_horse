@@ -15,68 +15,29 @@ class RoutesController extends Controller
 
     public function listarById($dados)
     {
-        $id      = (int) $dados['id'];
+        $id      = (string) $dados['id'];
         $routeId = Route::find($id);
  
         return $this->view('grade', ['selectedRouteId' => $id, 'routeId' => $routeId, 'routes' => Route::all()]);
     }
+
+    public function excluir($dados)
+    {
+        $id      = (string) $dados['id'];
+        $route = Route::destroy($id);
+        header( "Location: http://localhost/go_horse/index.php?controller=RoutesController&method=listar" );
+    }
  
-    // /**
-    //  * Mostrar formulario para criar um novo contato
-    //  */
-    // public function criar()
-    // {
-    //     return $this->view('form');
-    // }
- 
-    // /**
-    //  * Mostrar formulário para editar um contato
-    //  */
-    // public function editar($dados)
-    // {
-    //     $id      = (int) $dados['id'];
-    //     $contato = Contato::find($id);
- 
-    //     return $this->view('form', ['contato' => $contato]);
-    // }
- 
-    // /**
-    //  * Salvar o contato submetido pelo formulário
-    //  */
-    // public function salvar()
-    // {
-    //     $contato           = new Contato;
-    //     $contato->nome     = $this->request->nome;
-    //     $contato->telefone = $this->request->telefone;
-    //     $contato->email    = $this->request->email;
-    //     if ($contato->save()) {
-    //         return $this->listar();
-    //     }
-    // }
- 
-    // /**
-    //  * Atualizar o contato conforme dados submetidos
-    //  */
-    // public function atualizar($dados)
-    // {
-    //     $id                = (int) $dados['id'];
-    //     $contato           = Contato::find($id);
-    //     $contato->nome     = $this->request->nome;
-    //     $contato->telefone = $this->request->telefone;
-    //     $contato->email    = $this->request->email;
-    //     $contato->save();
- 
-    //     return $this->listar();
-    // }
- 
-    /**
-     * Apagar um contato conforme o id informado
-     */
-    // public function excluir($dados)
-    // {
-    //     $id      = (int) $dados['id'];
-    //     $contato = Contato::destroy($id);
-    //     return $this->listar();
-    // }
+    
+    public function salvar()
+    {
+        $route           = new Route;
+        $route->route_id     = $this->request->route_id;
+        $route->route_long_name = $this->request->route_long_name;
+        if ($route->save()) {
+            return $this->listar();
+        }
+    }
+
 }
 ?>

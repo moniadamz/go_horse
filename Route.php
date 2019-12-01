@@ -28,40 +28,31 @@ class Route
         return isset($this->atributos[$atributo]);
     }
  
-    // /**
-    //  * Salvar o contato
-    //  * @return boolean
-    //  */
-    // public function save()
-    // {
-    //     $colunas = $this->preparar($this->atributos);
-    //     if (!isset($this->id)) {
-    //         $query = "INSERT INTO contatos (".
-    //             implode(', ', array_keys($colunas)).
-    //             ") VALUES (".
-    //             implode(', ', array_values($colunas)).");";
-    //     } else {
-    //         foreach ($colunas as $key => $value) {
-    //             if ($key !== 'id') {
-    //                 $definir[] = "{$key}={$value}";
-    //             }
-    //         }
-    //         $query = "UPDATE contatos SET ".implode(', ', $definir)." WHERE id='{$this->id}';";
-    //     }
-    //     if ($conexao = Conexao::getInstance()) {
-    //         $stmt = $conexao->prepare($query);
-    //         if ($stmt->execute()) {
-    //             return $stmt->rowCount();
-    //         }
-    //     }
-    //     return false;
-    // }
+    public function save()
+    {
+        $colunas = $this->preparar($this->atributos);
+        if (!isset($this->id)) {
+            $query = "INSERT INTO routes (".
+                implode(', ', array_keys($colunas)).
+                ") VALUES (".
+                implode(', ', array_values($colunas)).");";
+        } else {
+            foreach ($colunas as $key => $value) {
+                if ($key !== 'id') {
+                    $definir[] = "{$key}={$value}";
+                }
+            }
+            $query = "UPDATE routes SET ".implode(', ', $definir)." WHERE id='{$this->id}';";
+        }
+        if ($conexao = Conexao::getInstance()) {
+            $stmt = $conexao->prepare($query);
+            if ($stmt->execute()) {
+                return $stmt->rowCount();
+            }
+        }
+        return false;
+    }
  
-    /**
-     * Tornar valores aceitos para sintaxe SQL
-     * @param type $dados
-     * @return string
-     */
     private function escapar($dados)
     {
         if (is_string($dados) & !empty($dados)) {
@@ -75,11 +66,6 @@ class Route
         }
     }
  
-    /**
-     * Verifica se dados são próprios para ser salvos
-     * @param array $dados
-     * @return array
-     */
     private function preparar($dados)
     {
         $resultado = array();
@@ -90,11 +76,7 @@ class Route
         }
         return $resultado;
     }
- 
-    /**
-     * Retorna uma lista de contatos
-     * @return array/boolean
-     */
+
     public static function all()
     {
         $conexao = Conexao::getInstance();
@@ -110,11 +92,7 @@ class Route
         }
         return false;
     }
- 
-    /**
-     * Retornar o número de registros
-     * @return int/boolean
-     */
+
     public static function count()
     {
         $conexao = Conexao::getInstance();
@@ -125,26 +103,14 @@ class Route
         return false;
     }
  
-    /**
-     * Encontra um recurso pelo id
-     * @param type $id
-     * @return type
-     */
     public static function find($id)
     {
         $conexao = Conexao::getInstance();
-        $stmt    = $conexao->prepare("SELECT trips.service_id, trips.route_id, stop_times.departure_time, stops.stop_name from stop_times join trips on trips.trip_id = stop_times.trip_id join stops on stops.stop_id = stop_times.stop_id 
+        $stmt    = $conexao->prepare("SELECT distinct trips.service_id, trips.route_id, stops.stop_name from stop_times join trips on trips.trip_id = stop_times.trip_id join stops on stops.stop_id = stop_times.stop_id 
         where trips.route_id = '{$id}'
-        order by trips.service_id, stop_times.departure_time limit 15;");
-        // $result  = array();
-        // if ($stmt->execute()) {
-        //     if ($stmt->rowCount() > 0) {
-        //         $resultado = $stmt->fetchObject('Route');
-        //         if ($resultado) {
-        //             return $resultado;
-        //         }
-        //     }
-        // }
+        group by stops.stop_name
+        order by trips.service_id;");
+
         $result  = array();
         if ($stmt->execute()) {
             while ($rs = $stmt->fetchObject(Route::class)) {
@@ -157,18 +123,13 @@ class Route
         return false;
     }
  
-    // /**
-    //  * Destruir um recurso
-    //  * @param type $id
-    //  * @return boolean
-    //  */
-    // public static function destroy($id)
-    // {
-    //     $conexao = Conexao::getInstance();
-    //     if ($conexao->exec("DELETE FROM contatos WHERE id='{$id}';")) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    public static function destroy($id)
+    {
+        $conexao = Conexao::getInstance();
+        if ($conexao->exec("DELETE FROM routes WHERE route_id='{$id}';")) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>
