@@ -106,10 +106,10 @@ class Route
     public static function find($id)
     {
         $conexao = Conexao::getInstance();
-        $stmt    = $conexao->prepare("SELECT distinct trips.service_id, trips.route_id, stop_times.departure_time, stops.stop_name from stop_times join trips on trips.trip_id = stop_times.trip_id join stops on stops.stop_id = stop_times.stop_id 
+        $stmt    = $conexao->prepare("SELECT distinct trips.service_id, trips.route_id, stops.stop_name from stop_times join trips on trips.trip_id = stop_times.trip_id join stops on stops.stop_id = stop_times.stop_id 
         where trips.route_id = '{$id}'
         group by stops.stop_name
-        order by trips.service_id, stop_times.departure_time;");
+        order by trips.service_id;");
 
         $result  = array();
         if ($stmt->execute()) {

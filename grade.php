@@ -14,6 +14,10 @@
         background: white;
     }
 
+    .table{
+        background: white;
+    }
+
 </style>
 
 <h1> Ônibus de Porto Alegre - Rotas </h1>
